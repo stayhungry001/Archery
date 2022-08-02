@@ -333,4 +333,4 @@ if not os.path.exists(PKEY_ROOT):
 try:
     from local_settings import *
 except ImportError:
-    print("import local settings failed, ignored")
+    pass

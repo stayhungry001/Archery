@@ -89,7 +89,7 @@
                                 title="请选择授权时间:"
                                 class="form-control selectpicker show-tick bs-select-hidden ">
                             <option value="day">一天</option>
-                            <option value="week">一周</option>
+                            <option value="week" selected>一周(线上环境推荐一周)</option>
                             <option value="month">一月</option>
                             <option value="year">长期(一年)</option>
                         </select>
@@ -99,16 +99,19 @@
                                class="form-control "
                                placeholder="请选择查询限制行数:">
                         <datalist id="limits">
+                            <option value=50>50(线上环境推荐50行)</option>
                             <option value=100>100</option>
                             <option value=500>500</option>
                             <option value=1000>1000</option>
+                            <option value=1000>5000</option>
                         </datalist>
                     </div>
                     <!--审批流程-->
                     <div id="div-workflow_auditors" class="form-group" style="display: none">
                         <p class="bg-primary">&nbsp&nbsp&nbsp审批流程：<b id="workflow_auditors"></b></p>
                     </div>
-                    <p class="text-info">提示：权限审核通过后即可进行在线查询，请耐心等待。</p>
+                    <p class="text-info">提示：权限审核通过后即可进行在线查询，请耐心等待。<br>
+                        <b>线上环境请按照最小需求申请，默认只能申请一周，最多只能查看50行记录。</b></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>

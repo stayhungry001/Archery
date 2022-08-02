@@ -14,3 +14,6 @@ sonar-project.properties
 .scannerwork
 .env
 local_settings.py
+config.yaml
+supervisord.pid
+static/
