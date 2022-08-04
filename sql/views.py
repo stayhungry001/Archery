@@ -351,7 +351,11 @@ def queryapplydetail(request, apply_id):
     workflow_detail = QueryPrivilegesApply.objects.get(apply_id=apply_id)
     # 获取当前审批和审批流程
     audit_auth_group, current_audit_auth_group = Audit.review_info(apply_id, 1)
-
+    user_info = "未配置审批人，请联系管理员处理。"
+    if current_audit_auth_group:
+        auth_users = auth_group_users([current_audit_auth_group], workflow_detail.group_id).all()
+        if auth_users:
+            user_info = ",".join([user.display for user in auth_users])
     # 是否可审核
     is_can_review = Audit.can_review(request.user, apply_id, 1)
     # 获取审核日志
@@ -375,6 +379,7 @@ def queryapplydetail(request, apply_id):
         "last_operation_info": last_operation_info,
         "current_audit_auth_group": current_audit_auth_group,
         "is_can_review": is_can_review,
+        "audit_auth_users": user_info
     }
     return render(request, "queryapplydetail.html", context)
 
