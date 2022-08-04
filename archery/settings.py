@@ -26,6 +26,7 @@ env = environ.Env(
     Q_CLUISTER_SYNC=(bool, False),  # qcluster 同步模式, debug 时可以调整为 True
     # CSRF_TRUSTED_ORIGINS=subdomain.example.com,subdomain.example2.com subdomain.example.com
     CSRF_TRUSTED_ORIGINS=(list, []),
+    PROD_LABELS=(List[str], ['PROD', '生产环境'])
 )
 
 # SECURITY WARNING: keep the secret key used in production secret!
