@@ -1,4 +1,5 @@
 # -*- coding: UTF-8 -*-
+import datetime
 import os
 import traceback
 
@@ -351,9 +352,20 @@ def queryapplydetail(request, apply_id):
     workflow_detail = QueryPrivilegesApply.objects.get(apply_id=apply_id)
     # 获取当前审批和审批流程
     audit_auth_group, current_audit_auth_group = Audit.review_info(apply_id, 1)
-
+    user_info = "未配置审批人，请联系管理员处理。"
+    if current_audit_auth_group:
+        auth_users = auth_group_users([current_audit_auth_group], workflow_detail.group_id).all()
+        if auth_users:
+            user_info = ",".join([user.display for user in auth_users])
     # 是否可审核
     is_can_review = Audit.can_review(request.user, apply_id, 1)
+    warn_infos = []
+    if workflow_detail.group_name.upper() in settings.env('PROD_LABELS'):
+        if workflow_detail.limit_num > 50:
+            warn_infos.append("线上环境申请查看行数超过50行。")
+        valid_days = (workflow_detail.valid_date - datetime.datetime.now().date()).days
+        if valid_days > 7:
+            warn_infos.append("线上环境申请时间超过7天。")
     # 获取审核日志
     if workflow_detail.status == 2:
         try:
@@ -375,6 +387,8 @@ def queryapplydetail(request, apply_id):
         "last_operation_info": last_operation_info,
         "current_audit_auth_group": current_audit_auth_group,
         "is_can_review": is_can_review,
+        "audit_auth_users": user_info,
+        "warn_info": "\n".join(warn_infos)
     }
     return render(request, "queryapplydetail.html", context)
 
