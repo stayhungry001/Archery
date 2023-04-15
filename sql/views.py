@@ -223,7 +223,7 @@ def detail(request, workflow_id):
                 current_audit_users_display = [
                     user.display for user in current_audit_users
                 ]
-                last_operation_info += "，当前审批人：" + ",".join(current_audit_users_display)
+                last_operation_info += "\n当前审批人：" + "，".join(current_audit_users_display)
         except Exception as e:
             logger.debug(f"无审核日志记录，错误信息{e}")
             last_operation_info = ""
