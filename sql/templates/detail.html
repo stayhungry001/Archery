@@ -173,6 +173,7 @@
                   placeholder="请填写审核备注/终止原因" rows=3></textarea>
         <br>
     {% endif %}
+    <div class="alert alert-danger">当单条SQL需要多表进行查询join时，受限于工具实现无法准确评估影响行数，请以线下评估为准。</div>
     <!--审核人修改可执行时间按钮-->
     {% if is_can_review %}
         <form id="from-passed" action="/passed/" method="post" style="display:inline-block;">
